@@ -5,11 +5,12 @@
 //Code is licenced GPLv2 (see LICENSE)
 //Font is licenced as per the Hershey Fonts licence (see LICENSE.hershey)
 
-String theword = "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+String theword = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 Font f = new Font();
 ArrayList buffer = new ArrayList();
-
+int glen;
+int counter = 0;
 
 void setup(){
 size(1000,600);
@@ -50,7 +51,8 @@ timesib.jhf
 timesr.jhf
 timesrb.jhf
   */
-  byte font_data[] = loadBytes("gothicita.jhf");
+  byte font_data[] = loadBytes("rowmans.1.jhf");
+  print(font_data[0]);
     for(int i=0; i < font_data.length;i++) {
       while(i < font_data.length && font_data[i] == '\n') {
         Glyph g = new Glyph(0,0);
@@ -96,20 +98,26 @@ timesrb.jhf
     position.add(new PVector(f.glyphs[0].maxx-f.glyphs[0].minx,0));
   }
   
-  
+
+glen = f.glyphs.length;
+frameRate(1);
 }
 void draw(){
-  smooth();
+//  smooth();
   background(0,0,0);
   stroke(255);
-    translate(width/2,height/2);
-//  pending_buffer.clear();
-   for (int i = 0; i < buffer.size(); i++) {
-    Renderable r = (Renderable) buffer.get(i);
-    r.display();
-  }
+//    translate(width/2,height/2);
+////  pending_buffer.clear();
+//   for (int i = 0; i < buffer.size(); i++) {
+//    Renderable r = (Renderable) buffer.get(i);
+//    r.display();
+//  }
   
-  noLoop();
+  f.glyphs[counter].display(new PVector(width/2,height/2));
+  counter++;
+//  noLoop();
+
+if(counter == glen-1) counter =0;
 } // end of draw
 
 int HersheyLen(String s) {
@@ -121,63 +129,4 @@ int HersheyLen(String s) {
   return len;
 }
 
-class Renderable {
-  Glyph g;
-  PVector position;
-  void display() {
-    g.display( position);
-  }
-  
-}
-class Glyph {
-  int minx,maxx;
-  Line[] lines = new Line[0];
 
-  Glyph(int _minx, int _maxx) {
-    minx = _minx;
-    maxx = _maxx;
-  }
-    void AddLine( Line l ) {
-    lines = (Line[]) append(lines, l);
-  }
-
-  void display( PVector position) {
-    for(int i=0;i<lines.length;++i) {
-      lines[i].display(position);
-    }
-  }
-}
-
-class Line {
-  PVector[] points = new PVector[0];
-
-  void AddPoint( PVector p ) {
-    points = (PVector[]) append(points,p);
-  }
-
-void display(PVector position){
-     if(points.length < 2 ) {
-      return;
-    }
-    
-    strokeWeight(1);
-    stroke(255);
-    PVector from = points[0];
-    from.add(position);
-    for(int i=1;i<points.length;++i) {
-      PVector to = points[i];
-      to.add(position);
-      line(from.x,from.y,to.x,to.y);
-      from = to;
-
-    }
-
-  }
-}
-
-class Font {
-  Glyph[] glyphs = new Glyph[0];
-  void AddGlyph( Glyph g ) {
-    glyphs = (Glyph[]) append(glyphs,g);
-  }
-}
