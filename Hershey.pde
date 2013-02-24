@@ -1,3 +1,10 @@
+// shamelessly stolen from 
+//devdsp
+// https://github.com/devdsp/Hershey-Fractal
+//License
+//Code is licenced GPLv2 (see LICENSE)
+//Font is licenced as per the Hershey Fonts licence (see LICENSE.hershey)
+
 String theword = "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 Font f = new Font();
@@ -5,9 +12,45 @@ ArrayList buffer = new ArrayList();
 
 
 void setup(){
-size(800,600);
+size(1000,600);
   BufferedReader reader;
-  byte font_data[] = loadBytes("symbolic.jhf");
+  
+  /*
+  possible fonts astrology.jhf
+cursive.jhf
+cyrilc_1.jhf
+cyrillic.jhf
+futural.jhf
+futuram.jhf
+gothgbt.jhf
+gothgrt.jhf
+gothiceng.jhf
+gothicger.jhf
+gothicita.jhf
+gothitt.jhf
+greek.jhf
+greekc.jhf* not working
+greeks.jhf * notworking
+japanese.jhf
+markers.jhf
+mathlow.jhf
+mathupp.jhf
+meteorology.jhf
+music.jhf
+rowmand.jhf
+rowmans.1.jhf
+rowmans.jhf
+rowmant.jhf
+scriptc.jhf
+scripts.jhf *not working
+symbolic.jhf
+timesg.jhf
+timesi.jhf
+timesib.jhf
+timesr.jhf
+timesrb.jhf
+  */
+  byte font_data[] = loadBytes("gothicita.jhf");
     for(int i=0; i < font_data.length;i++) {
       while(i < font_data.length && font_data[i] == '\n') {
         Glyph g = new Glyph(0,0);
